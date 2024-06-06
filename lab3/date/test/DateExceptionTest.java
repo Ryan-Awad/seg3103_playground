@@ -45,10 +45,28 @@ public class DateExceptionTest {
 
 	@Test(expected=IllegalArgumentException.class)
 	public void tests(){
-    		Date  date = new Date(year,month,day);
+    	Date date = new Date(year,month,day);
 		Date next = date.nextDate();
 		Assert.assertEquals(expectedYear, next.getYear());
 		Assert.assertEquals(expectedMont, next.getMonth());
 		Assert.assertEquals(expectedDay, next.getDay());
+	}
+
+	@Test
+	public void testWrongObject() {
+		String x = "Hello";
+		Date d = new Date(2024, 6, 6);
+		Assert.assertNotEquals(d, x);
+	}
+
+	@Test
+	public void testDifferentDates() {
+		Date d1 = new Date(2024, 6, 6);
+		Date d2 = new Date(2024, 6, 7);
+		Assert.assertNotEquals(d1, d2);
+		d2 = new Date(2024, 5, 6);
+		Assert.assertNotEquals(d1, d2);
+		d2 = new Date(2025, 6, 6);
+		Assert.assertNotEquals(d1, d2);
 	}
 }
