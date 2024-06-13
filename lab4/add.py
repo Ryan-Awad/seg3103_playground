@@ -1,3 +1,3 @@
 def add(a: int, b: int) -> int:
-    return -1
+    return a + b
 
