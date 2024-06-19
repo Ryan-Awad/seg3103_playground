@@ -2,13 +2,13 @@
 
 Test output for Twitter:
 
-![](lab5/assets/twitter_tests.png)
+![](./assets/twitter_tests.png)
 
 I unfortunately ran into issues with the grades app. 
 
 All that would render on the screen was the following:
 
-![](lab5/assets/image.png)
+![](./assets/image.png)
 
 As you can see, no grades are shown. 
 
