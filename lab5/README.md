@@ -8,7 +8,7 @@ I unfortunately ran into issues with the grades app.
 
 All that would render on the screen was the following:
 
-![alt text](image.png)
+![](lab5/assets/image.png)
 
 As you can see, no grades are shown. 
 
