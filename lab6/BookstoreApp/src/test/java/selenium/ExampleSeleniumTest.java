@@ -77,6 +77,18 @@ class ExampleSeleniumTest {
     assertEquals(expected, getWords(actual)[0]);
   }
 
+  @Test
+  public void test3() {
+    WebElement langSelector = driver.findElement(By.id("locales"));
+    langSelector.click();
+    WebElement frSelector = driver.findElement(By.cssSelector("option:nth-child(3)"));
+    frSelector.click();
+    WebElement title = driver.findElement(By.id("title"));
+    String expected = "Librairie Y'AMAZONE";
+    String actual = title.getText();
+    assertEquals(expected, actual);
+  }
+
   private String[] getWords(String s) {
     return s.split("\\s+");
   }
