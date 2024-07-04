@@ -18,7 +18,7 @@ defmodule Grades.Calculator do
       |> Enum.reject(fn mark -> mark < 0.25 end)
       |> Enum.count()
 
-    if avg_homework < 0.4 || avg_exams < 0.4 || num_labs < 3 do
+    if failed_to_participate(avg_homework, avg_exams, num_labs) do
       "EIN"
     else
       mark = 0.2 * avg_labs + 0.3 * avg_homework + 0.2 * midterm + 0.3 * final
@@ -50,7 +50,7 @@ defmodule Grades.Calculator do
       |> Enum.reject(fn mark -> mark < 0.25 end)
       |> Enum.count()
 
-    if avg_homework < 0.4 || avg_exams < 0.4 || num_labs < 3 do
+    if failed_to_participate(avg_homework, avg_exams, num_labs) do
       0
     else
       mark = 0.2 * avg_labs + 0.3 * avg_homework + 0.2 * midterm + 0.3 * final
@@ -78,5 +78,10 @@ defmodule Grades.Calculator do
     else
       Enum.sum(grades) / Enum.count(grades)
     end
+  end
+
+  # Helper method that just acts as a clean abstraction layer over the condition inside the function.
+  def failed_to_participate(avg_homework, avg_exams, num_labs) do
+    avg_homework < 0.4 || avg_exams < 0.4 || num_labs < 3
   end
 end
