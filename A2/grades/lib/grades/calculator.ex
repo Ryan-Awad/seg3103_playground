@@ -13,29 +13,14 @@ defmodule Grades.Calculator do
 
     avg_exams = (midterm + final) / 2
 
-    num_labs =
-      labs
-      |> Enum.reject(fn mark -> mark < 0.25 end)
-      |> Enum.count()
+    num_labs = get_num_labs(labs)
 
     if failed_to_participate(avg_homework, avg_exams, num_labs) do
       "EIN"
     else
       mark = calculate_grade(avg_labs, avg_homework, midterm, final)
-
-      cond do
-        mark > 0.895 -> "A+"
-        mark > 0.845 -> "A"
-        mark > 0.795 -> "A-"
-        mark > 0.745 -> "B+"
-        mark > 0.695 -> "B"
-        mark > 0.645 -> "C+"
-        mark > 0.595 -> "C"
-        mark > 0.545 -> "D+"
-        mark > 0.495 -> "D"
-        mark > 0.395 -> "E"
-        :else -> "F"
-      end
+      grade_scale = ["F","E","D","D+","C","C+","B","B+","A-","A","A+"]
+      get_grade_symbol(mark, grade_scale)
     end
   end
 
@@ -45,29 +30,14 @@ defmodule Grades.Calculator do
 
     avg_exams = (midterm + final) / 2
 
-    num_labs =
-      labs
-      |> Enum.reject(fn mark -> mark < 0.25 end)
-      |> Enum.count()
+    num_labs = get_num_labs(labs)
 
     if failed_to_participate(avg_homework, avg_exams, num_labs) do
       0
     else
       mark = calculate_grade(avg_labs, avg_homework, midterm, final)
-
-      cond do
-        mark > 0.895 -> 10
-        mark > 0.845 -> 9
-        mark > 0.795 -> 8
-        mark > 0.745 -> 7
-        mark > 0.695 -> 6
-        mark > 0.645 -> 5
-        mark > 0.595 -> 4
-        mark > 0.545 -> 3
-        mark > 0.495 -> 2
-        mark > 0.395 -> 1
-        :else -> 0
-      end
+      grade_scale = [0,1,2,3,4,5,6,7,8,9,10]
+      get_grade_symbol(mark, grade_scale)
     end
   end
 
@@ -88,5 +58,29 @@ defmodule Grades.Calculator do
   # Helper method that calculates your final grade
   def calculate_grade(avg_labs, avg_homework, midterm, final) do
     0.2 * avg_labs + 0.3 * avg_homework + 0.2 * midterm + 0.3 * final
+  end
+
+  # Helper method that returns the number of labs with a mark >= 0.25
+  def get_num_labs(labs) do
+    labs
+      |> Enum.reject(fn mark -> mark < 0.25 end)
+      |> Enum.count()
+  end
+
+  # Helper method that returns a grade symbol given a grade and a defined grade scale
+  def get_grade_symbol(mark, grade_scale) do
+    cond do
+      mark > 0.895 -> Enum.at(grade_scale, 10)
+      mark > 0.845 -> Enum.at(grade_scale, 9)
+      mark > 0.795 -> Enum.at(grade_scale, 8)
+      mark > 0.745 -> Enum.at(grade_scale, 7)
+      mark > 0.695 -> Enum.at(grade_scale, 6)
+      mark > 0.645 -> Enum.at(grade_scale, 5)
+      mark > 0.595 -> Enum.at(grade_scale, 4)
+      mark > 0.545 -> Enum.at(grade_scale, 3)
+      mark > 0.495 -> Enum.at(grade_scale, 2)
+      mark > 0.395 -> Enum.at(grade_scale, 1)
+      :else -> Enum.at(grade_scale, 0)
+    end
   end
 end
